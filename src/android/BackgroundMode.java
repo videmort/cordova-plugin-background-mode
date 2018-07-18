@@ -155,7 +155,6 @@ public class BackgroundMode extends CordovaPlugin {
     public void onDestroy() {
         stopService();
         super.onDestroy();
-        android.os.Process.killProcess(android.os.Process.myPid());
     }
 
     /**
@@ -269,19 +268,29 @@ public class BackgroundMode extends CordovaPlugin {
      * @param params Optional arguments for the event
      */
     private void fireEvent (Event event, String params) {
-        String eventName = event.name().toLowerCase();
-        Boolean active   = event == Event.ACTIVATE;
+        String eventName;
 
-        String str = String.format("%s._setActive(%b)",
+        switch (event) {
+            case ACTIVATE:
+                eventName = "activate"; break;
+            case DEACTIVATE:
+                eventName = "deactivate"; break;
+            default:
+                eventName = "failure";
+        }
+
+        String active = event == Event.ACTIVATE ? "true" : "false";
+
+        String flag = String.format("%s._isActive=%s;",
                 JS_NAMESPACE, active);
 
-        str = String.format("%s;%s.on%s(%s)",
-                str, JS_NAMESPACE, eventName, params);
+        String depFn = String.format("%s.on%s(%s);",
+                JS_NAMESPACE, eventName, params);
 
-        str = String.format("%s;%s.fireEvent('%s',%s);",
-                str, JS_NAMESPACE, eventName, params);
+        String fn = String.format("%s.fireEvent('%s',%s);",
+                JS_NAMESPACE, eventName, params);
 
-        final String js = str;
+        final String js = flag + fn + depFn;
 
         cordova.getActivity().runOnUiThread(new Runnable() {
             @Override
