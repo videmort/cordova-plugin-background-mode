@@ -281,16 +281,16 @@ public class BackgroundMode extends CordovaPlugin {
         String eventName = event.name().toLowerCase();
         Boolean active   = event == Event.ACTIVATE;
 
-        String str = String.format("%s._setActive(%b)",
+        String flag = String.format("%s._isActive=%s;",
                 JS_NAMESPACE, active);
 
-        str = String.format("%s;%s.on%s(%s)",
-                str, JS_NAMESPACE, eventName, params);
+        String depFn = String.format("%s.on%s(%s);",
+                JS_NAMESPACE, eventName, params);
 
-        str = String.format("%s;%s.fireEvent('%s',%s);",
-                str, JS_NAMESPACE, eventName, params);
+        String fn = String.format("%s.fireEvent('%s',%s);",
+                JS_NAMESPACE, eventName, params);
 
-        final String js = str;
+        final String js = flag + fn + depFn;
 
         cordova.getActivity().runOnUiThread(() -> webView.loadUrl("javascript:" + js));
     }

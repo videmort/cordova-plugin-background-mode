@@ -126,7 +126,7 @@ exports.setDefaults = function (overrides)
  * Configures the notification settings for Android.
  * Will be merged with the defaults.
  *
- * @param [ Object ] options Dict of options to be overridden.
+ * @param [ Object ] overrides Dict of options to be overridden.
  *
  * @return [ Void ]
  */
@@ -143,12 +143,6 @@ exports.configure = function (options)
         console.log('BackgroundMode is not active, skipped...');
         return;
     }
-
-    this._mergeObjects(options, settings);
-    this._mergeObjects(options, defaults);
-    this._settings = options;
-
-    cordova.exec(null, null, 'BackgroundMode', 'configure', [options, true]);
 };
 
 /**
@@ -396,12 +390,6 @@ exports.un = function (event, callback)
  */
 exports._isEnabled = false;
 
-/**
- * @private
- *
- * Flag indicates if the mode is active.
- */
-exports._isActive = false;
 
 /**
  * @private
@@ -426,7 +414,6 @@ exports._defaults =
  * Merge settings with default values.
  *
  * @param [ Object ] options The custom options.
- * @param [ Object ] toMergeIn The options to merge in.
  *
  * @return [ Object ] Default values merged with custom values.
  */
@@ -485,6 +472,41 @@ exports._pluginInitialize = function()
     }
 
     this._isActive  = this._isActive || device.platform == 'browser';
+};
+
+
+/***********
+ * PRIVATE *
+ ***********/
+
+/**
+ * @private
+ *
+ * Flag indicates if the mode is enabled.
+ */
+exports._isEnabled = false;
+
+/**
+ * @private
+ *
+ * Flag indicates if the mode is active.
+ */
+exports._isActive = false;
+
+/**
+ * @private
+ *
+ * Default values of all available options.
+ */
+exports._defaults = {
+    title:   'App is running in background',
+    text:    'Doing heavy tasks.',
+    bigText: false,
+    resume:  true,
+    silent:  false,
+    hidden:  true,
+    color:   undefined,
+    icon:    'icon'
 };
 
 // Called before 'deviceready' listener will be called
