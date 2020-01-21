@@ -117,7 +117,7 @@ cordova.plugins.backgroundMode.excludeFromTaskList();
 ```
 
 ### Detect screen status
-The method works async instead of _isAcive()_ or _isEnabled()_.
+The method works async instead of _isActive()_ or _isEnabled()_.
 
 ```js
 cordova.plugins.backgroundMode.isScreenOff(function(bool) {
@@ -164,7 +164,7 @@ __Note:__ All properties are optional - only override the things you need to.
 In silent mode the plugin will not display a notification - which is not the default. Be aware that Android recommends adding a notification otherwise the OS may pause the app.
 
 ```js
-cordova.plugins.backgroundMode.configure({ silent: true });
+cordova.plugins.backgroundMode.setDefaults({ silent: true });
 ```
 
 
@@ -196,7 +196,7 @@ This software is released under the [Apache 2.0 License][apache2_license].
 
 Made with :yum: from Leipzig
 
-© 2017 [appPlant GmbH][appplant]
+? 2017 [appPlant GmbH][appplant] & [meshfields][meshfields]
 
 
 [cordova]: https://cordova.apache.org
@@ -205,3 +205,4 @@ Made with :yum: from Leipzig
 [changelog]: CHANGELOG.md
 [apache2_license]: http://opensource.org/licenses/Apache-2.0
 [appplant]: http://appplant.de
+[meshfields]: http://meshfields.de

@@ -36,7 +36,8 @@
     <platform name="ios">
         <config-file target="config.xml" parent="/*">
             <feature name="BackgroundMode">
-                <param name="ios-package" value="APPBackgroundMode" />
+                <param name="ios-package" value="APPBackgroundMode" onload="true" />
+                <param name="onload" value="true" />
             </feature>
         </config-file>
 
@@ -57,15 +58,16 @@
     <!-- android -->
     <platform name="android">
         <config-file target="res/xml/config.xml" parent="/*">
-            <feature name="BackgroundMode" >
-                <param name="android-package"
-                      value="de.appplant.cordova.plugin.background.BackgroundMode"/>
+            <feature name="BackgroundMode">
+                <param name="android-package" value="de.appplant.cordova.plugin.background.BackgroundMode"/>
+            </feature>
+            <feature name="BackgroundModeExt">
+                <param name="android-package" value="de.appplant.cordova.plugin.background.BackgroundModeExt"/>
             </feature>
         </config-file>
 
         <config-file target="res/xml/config.xml" parent="/*">
             <preference name="KeepRunning" value="true" />
-            <preference name="AndroidLaunchMode" value="singleInstance"/>
         </config-file>
 
         <config-file target="AndroidManifest.xml" parent="/manifest/application">
@@ -81,7 +83,7 @@
             target-dir="src/de/appplant/cordova/plugin/background" />
 
         <source-file
-            src="src/android/BackgroundExt.java"
+            src="src/android/BackgroundModeExt.java"
             target-dir="src/de/appplant/cordova/plugin/background" />
 
         <source-file
